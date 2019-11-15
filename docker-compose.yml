@@ -13,12 +13,12 @@ services:
     depends_on:
       - redis
     environment:
-      - "STATIC_ROOT=/home/static-data"
-      - "MEDIA_ROOT=/home/media-data"
+      - "STATIC_ROOT=/tmp/static-data"
+      - "MEDIA_ROOT=/tmp/media-data"
       - "REDIS_URL=redis://redis:6379/1"
     volumes:
-      - "media:/home/media-data/:rw"
-      - "static:/home/static-data/:rw"
+      - "media:/tmp/media-data/:rw"
+      - "static:/tmp/static-data/:rw"
   nginx:
     container_name: nginx
     stdin_open: True
@@ -28,9 +28,9 @@ services:
     volumes:
       - "./nginx/nginx.conf:/etc/nginx/nginx.conf:rw"
       - "./nginx/nginx-snippet-https.conf:/etc/nginx/nginx-snippet-https.conf:rw"
-      - "static:/home/static-data:rw"
-      - "media:/home/media-data:rw"
-      - "logs:/home/logs-data:rw"
+      - "static:/tmp/static-data:rw"
+      - "media:/tmp/media-data:rw"
+      - "logs:/tmp/logs-data:rw"
       - "web_root:/var/www/html:rw"
       - "certbot_etc:/etc/letsencrypt:rw"
       - "certbot_var:/var/lib/letsencrypt:rw"
